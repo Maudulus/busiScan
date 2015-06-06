@@ -26,11 +26,11 @@ var iodClient= new iod.IODClient('http://api.idolondemand.com','dab574b3-1612-42
 exports.receiveImg = function(req,res){
   console.log(req.body.url)
   // 'https://www.idolondemand.com/sample-content/images/bowers.jpg'
-  var data= {'text':'I like cats'}
+  var data= {'url':'http://www.alphagraphics.com/images/1600/filestorage/4031/businesscardprinting.jpg'}
   var callback = function(err,resp,body){
     console.log(body)
   }
-  iodClient.call('analyzesentiment',callback,data)
+  iodClient.call('ocrdocument',callback,data)
 }
 /**
  * GET /api
