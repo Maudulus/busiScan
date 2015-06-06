@@ -28,6 +28,7 @@
     "fbgraph": "^1.0.0",
     "github-api": "^0.10.6",
     "instagram-node": "^0.5.7",
+    "iod-node":"git+https://github.com/lemoogle/iod-node",
     "jade": "^1.10.0",
     "lastfm": "^0.9.2",
     "less": "^2.5.1",
