@@ -24,14 +24,18 @@ var iod = require('iod-node')
 var iodClient= new iod.IODClient('http://api.idolondemand.com','dab574b3-1612-42df-942a-9f44b2bd5a61')
 
 exports.receiveImg = function(req,res){
-  console.log(req.body.url)
+  // console.log(req.body.url)
+  console.log(req.body)
   // 'https://www.idolondemand.com/sample-content/images/bowers.jpg'
   var data= {'url':'https://scontent-lga1-1.xx.fbcdn.net/hphotos-xaf1/v/t1.0-9/11401127_939547289401862_4055588893217153387_n.jpg?oh=7659c1f609ac35a2156fba75055a6304&oe=55FFBD7E'}
   var callback = function(err,resp,body){
     console.log(body)
     res.send(JSON.stringify(secrets.sampleData));
+    res.render('home', {
+      title: 'Home'
+    });
   }
-  iodClient.call('ocrdocument',callback,data)
+  iodClient.call('ocrdocument',callback,data);
 }
 /**
  * GET /api
