@@ -31,9 +31,6 @@ exports.receiveImg = function(req,res){
   var callback = function(err,resp,body){
     console.log(body)
     res.send(JSON.stringify(secrets.sampleData));
-    res.render('home', {
-      title: 'Home'
-    });
   }
   iodClient.call('ocrdocument',callback,data);
 }
