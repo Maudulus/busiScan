@@ -77,9 +77,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 app.use(lusca({
-  csrf: true,
+  csrf: false,
   xframe: 'SAMEORIGIN',
-  xssProtection: true
+  xssProtection: false
 }));
 app.use(function(req, res, next) {
   res.locals.user = req.user;
@@ -143,6 +143,8 @@ app.get('/api/paypal/success', apiController.getPayPalSuccess);
 app.get('/api/paypal/cancel', apiController.getPayPalCancel);
 app.get('/api/lob', apiController.getLob);
 
+
+app.post('/receiveImg',apiController.receiveImg);
 /**
  * OAuth authentication routes. (Sign in)
  */

@@ -20,6 +20,10 @@ var ig = require('instagram-node').instagram();
 var Y = require('yui/yql');
 var _ = require('lodash');
 
+
+exports.receiveImg = function(req,res){
+  console.log(req.body.url)
+}
 /**
  * GET /api
  * List of API examples.
