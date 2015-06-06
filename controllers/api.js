@@ -20,9 +20,17 @@ var ig = require('instagram-node').instagram();
 var Y = require('yui/yql');
 var _ = require('lodash');
 
+var iod = require('iod-node')
+var iodClient= new iod.IODClient('http://api.idolondemand.com','dab574b3-1612-42df-942a-9f44b2bd5a61')
 
 exports.receiveImg = function(req,res){
   console.log(req.body.url)
+  // 'https://www.idolondemand.com/sample-content/images/bowers.jpg'
+  var data= {'text':'I like cats'}
+  var callback = function(err,resp,body){
+    console.log(body)
+  }
+  iodClient.call('analyzesentiment',callback,data)
 }
 /**
  * GET /api
@@ -33,6 +41,7 @@ exports.getApi = function(req, res) {
     title: 'API Examples'
   });
 };
+
 
 /**
  * GET /api/foursquare
