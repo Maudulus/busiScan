@@ -23,8 +23,8 @@ var _ = require('lodash');
 var iod = require('iod-node')
 var iodClient= new iod.IODClient('http://api.idolondemand.com','dab574b3-1612-42df-942a-9f44b2bd5a61')
 
-var AWS = require('aws-sdk');
-var s3 = new AWS.S3(); 
+// var AWS = require('aws-sdk');
+// var s3 = new AWS.S3(); 
 
 
 function extractInfo(data, res) {
