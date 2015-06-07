@@ -30,8 +30,8 @@ var client = s3.createClient({
   multipartUploadThreshold: 20971520, // this is the default (20 MB)
   multipartUploadSize: 15728640, // this is the default (15 MB)
   s3Options: {
-    accessKeyId: secrets.AWS_ACCESS_KEY,
-    secretAccessKey: secrets.AWS_SECRET_KEY,
+    accessKeyId: secrets.aws.AWS_ACCESS_KEY,
+    secretAccessKey: secrets.aws.AWS_SECRET_KEY,
     // any other options are passed to new AWS.S3()
     // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html#constructor-property
   },
