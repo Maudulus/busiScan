@@ -80,11 +80,11 @@ var iodClient= new iod.IODClient('http://api.idolondemand.com','dab574b3-1612-42
 
 exports.receiveImg = function(req,res) {
 
-  fs.readFile(req.files.image.path, function(err, data) {
+/*  fs.readFile(req.files.image.path, function(err, data) {
       //var dirname = ".";
       //var newPath = dirname + "/uploads/" + req.files.image.originalFilename;
       console.log(data)
-      /*
+      
       fs.writeFile(newPath, data, function(err) {
           if (err) {
               res.json({
@@ -96,12 +96,13 @@ exports.receiveImg = function(req,res) {
               });
           }
       });
-*/
-  });
 
-  var data= {'url':'https://scontent-lga1-1.xx.fbcdn.net/hphotos-xaf1/v/t1.0-9/11401127_939547289401862_4055588893217153387_n.jpg?oh=7659c1f609ac35a2156fba75055a6304&oe=55FFBD7E'}
+  });
+*/
+  var data= {'file':req.files.image.path}
   var callback = function(err,resp,body){
     if (body){
+      console.log(body)
 
       var text_block = body.text_block[0];
       if (text_block) extractInfo(text_block.text, res);
