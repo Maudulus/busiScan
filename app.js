@@ -149,6 +149,8 @@ app.get('/api/lob', apiController.getLob);
 
 
 app.post('/receiveImg',apiController.receiveImg);
+app.post('/tests3',apiController.testS3);
+
 /**
  * OAuth authentication routes. (Sign in)
  */
