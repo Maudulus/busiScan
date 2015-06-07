@@ -23,9 +23,12 @@ var _ = require('lodash');
 var iod = require('iod-node')
 var iodClient= new iod.IODClient('http://api.idolondemand.com','dab574b3-1612-42df-942a-9f44b2bd5a61')
 
+var aws = require('aws-sdk');
+
+
 exports.receiveImg = function(req,res){
   // console.log(req.body.url)
-  console.log(req.body)
+  // console.log(req.body)
   // 'https://www.idolondemand.com/sample-content/images/bowers.jpg'
   console.log("req name is " + req.name)
   console.log("req path is " + req.path)
