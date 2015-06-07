@@ -67,7 +67,7 @@ exports.receiveImg = function(req,res) {
 
     s3Params: {
       Bucket: "monsiourbucketz",
-      Key: req.files.image.path,
+      Key: "hello",
       // other options supported by putObject, except Body and ContentLength.
       // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
     },
