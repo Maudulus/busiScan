@@ -96,25 +96,6 @@ exports.receiveImg = function(req,res) {
   }catch(err){
 
   }
-  try{
-    fs.readFile(req.files.image.path, function(err, data) {
-        var newPath = "/uploads/" + req.files.image.originalFilename;
-        fs.writeFile(newPath, data, function(err) {
-            if (err) {
-                res.send(
-                    "Error"
-                );
-            } else {
-                res.send(
-                    "Saved"
-                );
-            }
-        });
-    });
-  }catch(err){
-    console.log(err)
-  }
-
 
   var data = {'file':req.files.image.path, 'mode':'scene_photo'}
   var callback = function(err,resp,body){
