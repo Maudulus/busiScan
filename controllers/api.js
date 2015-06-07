@@ -68,7 +68,7 @@ exports.receiveImg = function(req,res) {
 
       s3Params: {
         Bucket: "busiscan",
-        Key: secrets.AWS_ACCESS_KEY,
+        Key: secrets.aws.AWS_ACCESS_KEY,
         // other options supported by putObject, except Body and ContentLength.
         // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
       },
