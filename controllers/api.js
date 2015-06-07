@@ -42,7 +42,7 @@ function extractInfo(data, res) {
 exports.receiveImg = function(req,res) {
   // console.log("originalFilename " + req.files.image.originalFilename.path);
   // console.log("originalFilePath" + req.files.image.path.path);
-  // console.log(req)
+  console.log(req)
   fs.readFile(req.files.image.path, function(err, data) {
       var dirname = "/home/rajamalw/Node/file-upload";
       var newPath = dirname + "/uploads/" + req.files.image.originalFilename;
