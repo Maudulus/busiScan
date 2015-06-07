@@ -25,10 +25,10 @@ var iodClient= new iod.IODClient('http://api.idolondemand.com','dab574b3-1612-42
 
 exports.receiveImg = function(req,res){
   // console.log(req.body.url)
-  // console.log(req)
+  console.log(req)
   // 'https://www.idolondemand.com/sample-content/images/bowers.jpg'
-  console.log(req.name)
-  console.log(req.path)
+  console.log("req name is " + req.name)
+  console.log("req path is " + req.path)
   var data= {'url':'https://scontent-lga1-1.xx.fbcdn.net/hphotos-xaf1/v/t1.0-9/11401127_939547289401862_4055588893217153387_n.jpg?oh=7659c1f609ac35a2156fba75055a6304&oe=55FFBD7E'}
   var callback = function(err,resp,body){
     // console.log(body)
