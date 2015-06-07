@@ -81,12 +81,12 @@ var iod = require('iod-node')
 var iodClient= new iod.IODClient('http://api.idolondemand.com','dab574b3-1612-42df-942a-9f44b2bd5a61')
 
 exports.receiveImg = function(req,res) {
-  console.log(req)
+  // console.log(req)
 
   var data= {'file':req.files.image.path, 'mode':'scene_photo'}
   var callback = function(err,resp,body){
     if (body){
-      console.log(body)
+      // console.log(body)
 
       var text_block = body.text_block[0];
       if (text_block) extractInfo(text_block.text, res);
