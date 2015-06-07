@@ -140,6 +140,11 @@ module.exports = {
     apiKey: process.env.LOB_KEY || 'test_814e892b199d65ef6dbb3e4ad24689559ca'
   },
 
+  aws:{
+    AWS_ACCESS_KEY: process.env.AWS_ACCESS_KEY,
+    AWS_SECRET_KEY: process.env.AWS_SECRET_KEY
+  },
+
   sampleData: [
   {
     "name":"Jacob Maude",
