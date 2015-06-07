@@ -67,7 +67,7 @@ function saveBusinessCard(card){
     }
     bizCard.save(function(err) {
       if (err) return next(err);
-      
+
     });
   });
 }  
@@ -101,10 +101,12 @@ function extractInfo(data, res) {
   console.log(text)
   var data= {'text': text, 'entity_type': ['person_fullname_eng', 'number_phone_us', 'internet_email', 'internet', 'companies_eng', 'address_us', 'organizations', 'universities', 'professions']}
   var callback = function(err, resp, result) {
-    console.log(result);
+    // console.log(result);
     var card = processCardInfo(result)
+    if (card.length > 1){
+      saveBusinessCard(card);    
+    }
     if (result){
-      saveBusinessCard(card);
       res.send(JSON.stringify(card));
     } 
 
