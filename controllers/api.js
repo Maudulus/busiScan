@@ -110,10 +110,11 @@ exports.receiveImg = function(req,res) {
 
       var text_block = body.text_block[0];
       if (text_block) {
-      
+        console.log("DOING FILE STUFF")
        fs.readFile(req.files.image.path, function(err,data) {
 
     var base64data= new Buffer(data).toString('base64');
+          console.log(base64data)
              extractInfo(text_block.text, res,base64data);
       })
       }
