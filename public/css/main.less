@@ -16,6 +16,13 @@ body {
   margin-bottom: 75px;
 }
 
+#map-canvas{
+  width:100%;
+  height:300px;
+  margin:0 auto;
+  float:right;
+}
+
 footer {
   position: absolute;
   bottom: 0;
@@ -60,4 +67,100 @@ footer {
 .fa,
 [class^='ion-'] {
   margin-right: 6px;
+}
+
+
+.item{
+  background:gray;
+  color:#204056;
+  margin-left:2%;
+  margin-bottom:2%;
+}
+.item:nth-child(6n+3){
+  margin-left:0;
+}
+.item:hover{
+  background:#39D1B4;
+}
+
+.item, .grid-sizer {
+  width:  15%;
+}
+.grid-sizer{
+  display: none;
+}
+.item,
+.grid-sizer {
+  float: left;
+  height:180px;
+}
+
+.item img{
+  width: 60%;
+}
+.helper {
+  display: inline-block;
+  height: 100%;
+  margin-top: -180%;
+}
+@media screen and (max-width: 1182px){
+  .item, .grid-sizer {
+  }  
+}
+@media screen and (max-width: 991px){
+  .item, .grid-sizer {
+    width: 23.5%;
+  } 
+  .item:nth-child(6n+3){
+    margin-left:2%;
+  }   
+  .item:nth-child(4n-1){
+    margin-left:0%;
+  }  
+}
+@media screen and (max-width: 991px){
+  .item, .grid-sizer {
+    //width: 25%;
+  }  
+}
+@media screen and (max-width:600px){
+  #topFilter{
+    height:130px;
+  }
+  .filterSelect{
+    display:block;
+    margin-bottom:5px;
+    width:100%
+  }
+  .item, .grid-sizer {
+    width: 32%;
+  }  
+  .item:nth-child(4n-1){
+    margin-left:2%;
+  } 
+  .item:nth-child(3n){
+    margin-left:0%;
+  }   
+}
+@media screen and (max-width: 480px){
+  .item, .grid-sizer {
+    width: 49%;
+  }  
+  .item{
+    margin-left:0%;
+  }     
+  .item:nth-child(4n-1){
+    margin-left:0%;
+  } 
+  .item:nth-child(2n){
+    margin-left:2%;
+  }     
+}
+@media screen and (max-width: 400px){
+  .item, .grid-sizer {
+    width: 100%;
+  }  
+  .item:nth-child(2n){
+    margin-left:0%;
+  }
 }

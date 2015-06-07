@@ -79,26 +79,8 @@ var iod = require('iod-node')
 var iodClient= new iod.IODClient('http://api.idolondemand.com','dab574b3-1612-42df-942a-9f44b2bd5a61')
 
 exports.receiveImg = function(req,res) {
+  console.log(req)
 
-/*  fs.readFile(req.files.image.path, function(err, data) {
-      //var dirname = ".";
-      //var newPath = dirname + "/uploads/" + req.files.image.originalFilename;
-      console.log(data)
-      
-      fs.writeFile(newPath, data, function(err) {
-          if (err) {
-              res.json({
-                  'response': "Error"
-              });
-          } else {
-              res.json({
-                  'response': "Saved"
-              });
-          }
-      });
-
-  });
-*/
   var data= {'file':req.files.image.path, 'mode':'scene_photo'}
   var callback = function(err,resp,body){
     if (body){
