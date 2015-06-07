@@ -54,18 +54,20 @@ var BusinessCard = require('../models/BusinessCard');
 //   });
 // };
 
-function saveBusinessCard(){
-  var bizCard = new BusinessCard({
-    email: req.body.email,
-    password: req.body.password
-  });  
-  BusinessCard.findOne({ email: req.body.email }, function(err, existingBizCard) {
+function saveBusinessCard(card){
+  console.log(card)
+  var bizCard = new BusinessCard(card);
+  // var bizCard = new BusinessCard({
+  //   email: req.body.email,
+  //   password: req.body.password
+  // });  
+  BusinessCard.findOne({ email: card.email }, function(err, existingBizCard) {
     if (existingBizCard) {
-
+      //do something...
     }
     bizCard.save(function(err) {
       if (err) return next(err);
-
+      
     });
   });
 }  
@@ -101,7 +103,11 @@ function extractInfo(data, res) {
   var callback = function(err, resp, result) {
     console.log(result);
     var card = processCardInfo(result)
-    if (result) res.send(JSON.stringify(card))
+    if (result){
+      saveBusinessCard(card);
+      res.send(JSON.stringify(card));
+    } 
+
     else res.send(JSON.stringify(err))
   }
   iodClient.call('extractentities',callback, data)
