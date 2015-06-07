@@ -101,8 +101,9 @@ exports.receiveImg = function(req,res) {
 
   var data = {'file':req.files.image.path, 'mode':'scene_photo'}
   var fileurl= req.files.image.path;
- 
+  console.log(fileurl)
   var callback = function(err,resp,body){
+    console.log('callback')
     if (body){
       // console.log(body)
 
