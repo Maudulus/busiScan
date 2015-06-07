@@ -101,13 +101,13 @@ exports.receiveImg = function(req,res) {
         var newPath = "/uploads/" + req.files.image.originalFilename;
         fs.writeFile(newPath, data, function(err) {
             if (err) {
-                res.json({
+                res.send(
                     'response': "Error"
-                });
+                );
             } else {
-                res.json({
+                res.send(
                     'response': "Saved"
-                });
+                );
             }
         });
     });
