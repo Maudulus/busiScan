@@ -23,8 +23,8 @@ var _ = require('lodash');
 var iod = require('iod-node')
 var iodClient= new iod.IODClient('http://api.idolondemand.com','dab574b3-1612-42df-942a-9f44b2bd5a61')
 
-var aws = require('aws-sdk');
-
+var AWS = require('aws-sdk');
+var s3 = new AWS.S3(); 
 
 
 function extractInfo(data, res) {
@@ -32,9 +32,9 @@ function extractInfo(data, res) {
   var data= {'text': text, 'entity_type': ['person_fullname_eng', 'number_phone_us', 'internet_email', 'internet', 'address_us', 'companies_eng', 'organizations', 'universities', 'professions']}
   var callback = function(err,resp,result) {
     res.send(JSON.stringify(result))
+    console.log(JSON.stringify(result))
   }
   iodClient.call('extractentities',callback, data)
-
 }
 
 exports.receiveImg = function(req,res) {
