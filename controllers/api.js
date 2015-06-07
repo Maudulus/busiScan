@@ -70,12 +70,35 @@ function saveBusinessCard(){
   });
 }  
 
+var fs = require('fs');
+// var AWS = require('aws-sdk');
+// var s3 = new AWS.S3(); 
+
+
 var iod = require('iod-node')
 var iodClient= new iod.IODClient('http://api.idolondemand.com','dab574b3-1612-42df-942a-9f44b2bd5a61')
 
 exports.receiveImg = function(req,res) {
   //console.log("originalFilename " + req.files.image.originalFilename);
   //console.log("originalFilePath" + req.files.image.path);
+  console.log(req)
+  fs.readFile(req.files.image.path, function(err, data) {
+      var dirname = "/home/rajamalw/Node/file-upload";
+      var newPath = dirname + "/uploads/" + req.files.image.originalFilename;
+      fs.writeFile(newPath, data, function(err) {
+          if (err) {
+              res.json({
+                  'response': "Error"
+              });
+          } else {
+              res.json({
+                  'response': "Saved"
+              });
+          }
+      });
+  });
+
+
   // 'https://www.idolondemand.com/sample-content/images/bowers.jpg'
   // var data = {'url': req.body.url} 
   var data = {'url':'https://scontent-lga1-1.xx.fbcdn.net/hphotos-xaf1/v/t1.0-9/11401127_939547289401862_4055588893217153387_n.jpg?oh=7659c1f609ac35a2156fba75055a6304&oe=55FFBD7E'}
