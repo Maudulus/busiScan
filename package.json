@@ -54,6 +54,7 @@
     "paypal-rest-sdk": "^1.5.3",
     "request": "^2.57.0",
     "serve-favicon": "^2.2.1",
+    "s3":"latest",
     "stripe": "^3.3.4",
     "tumblr.js": "^0.0.5",
     "twilio": "^2.2.1",
