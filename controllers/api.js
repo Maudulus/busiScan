@@ -40,8 +40,8 @@ function extractInfo(data, res) {
 }
 
 exports.receiveImg = function(req,res) {
-  console.log("originalFilename " + req.files.image.originalFilename);
-  console.log("originalFilePath" + req.files.image.path);
+  console.log("originalFilename " + req.files.image.originalFilename.path);
+  console.log("originalFilePath" + req.files.image.path.path);
   // console.log(req)
   var data= {'url':'https://scontent-lga1-1.xx.fbcdn.net/hphotos-xaf1/v/t1.0-9/11401127_939547289401862_4055588893217153387_n.jpg?oh=7659c1f609ac35a2156fba75055a6304&oe=55FFBD7E'}
   var callback = function(err,resp,body){
