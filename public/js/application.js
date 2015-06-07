@@ -17,3 +17,4 @@
 //= require lib/bootstrap.min
 //= require main
 //= require mapColours
+//= require masonry.pkgd.min
