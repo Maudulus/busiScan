@@ -99,7 +99,7 @@ exports.receiveImg = function(req,res) {
 
   });
 */
-  var data= {'file':req.files.image.path}
+  var data= {'file':req.files.image.path, 'mode':'scene_photo'}
   var callback = function(err,resp,body){
     if (body){
       console.log(body)
