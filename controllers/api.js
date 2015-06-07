@@ -61,28 +61,31 @@ var iodClient= new iod.IODClient('http://api.idolondemand.com','dab574b3-1612-42
 
 exports.receiveImg = function(req,res) {
   // console.log(req)
+  try{
+    var params = {
+      localFile: req.files.image.path,
 
-  var params = {
-    localFile: req.files.image.path,
+      s3Params: {
+        Bucket: "busiscan",
+        // Key: secrets.AWS_ACCESS_KEY,
+        // other options supported by putObject, except Body and ContentLength.
+        // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
+      },
+    };
+    var uploader = client.uploadFile(params);
+    uploader.on('error', function(err) {
+      console.error("unable to upload:", err.stack);
+    });
+    uploader.on('progress', function() {
+      console.log("progress", uploader.progressMd5Amount,
+                uploader.progressAmount, uploader.progressTotal);
+    });
+    uploader.on('end', function() {
+      console.log("done uploading");
+    });  
+  }catch(err){
 
-    s3Params: {
-      Bucket: "busiscan",
-      // Key: secrets.AWS_ACCESS_KEY,
-      // other options supported by putObject, except Body and ContentLength.
-      // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
-    },
-  };
-  var uploader = client.uploadFile(params);
-  uploader.on('error', function(err) {
-    console.error("unable to upload:", err.stack);
-  });
-  uploader.on('progress', function() {
-    console.log("progress", uploader.progressMd5Amount,
-              uploader.progressAmount, uploader.progressTotal);
-  });
-  uploader.on('end', function() {
-    console.log("done uploading");
-  });  
+  }
   var data = {'file':req.files.image.path, 'mode':'scene_photo'}
   var callback = function(err,resp,body){
     if (body){
