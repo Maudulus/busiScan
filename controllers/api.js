@@ -37,7 +37,7 @@ function extractInfo(data, res) {
 
 exports.receiveImg = function(req,res) {
   // console.log(req.body.url)
-  console.log(req)
+  console.log(req.body)
   // 'https://www.idolondemand.com/sample-content/images/bowers.jpg'
   console.log("req name is " + req.name)
   console.log("req path is " + req.path)
