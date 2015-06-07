@@ -25,10 +25,10 @@ var BusinessCard = require('../models/BusinessCard');
 function saveBusinessCard(card){
   console.log(card)
   var bizCard = new BusinessCard(card);
-  BusinessCard.findOne($or[{ email: card.email },{ email: card.phone }], function(err, existingBizCard) {
+  BusinessCard.findOne({ email: card.email }, function(err, existingBizCard) {
     if (existingBizCard) {
       //do something...
-      console.log('found existing stuff')
+      
     }
     bizCard.save(function(err) {
       if (err) return next(err);
