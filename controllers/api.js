@@ -23,15 +23,34 @@ var _ = require('lodash');
 var iod = require('iod-node')
 var iodClient= new iod.IODClient('http://api.idolondemand.com','dab574b3-1612-42df-942a-9f44b2bd5a61')
 
-exports.receiveImg = function(req,res){
-  console.log(req.body.url)
-  // 'https://www.idolondemand.com/sample-content/images/bowers.jpg'
-  var data= {'url':'https://scontent-lga1-1.xx.fbcdn.net/hphotos-xaf1/v/t1.0-9/11401127_939547289401862_4055588893217153387_n.jpg?oh=7659c1f609ac35a2156fba75055a6304&oe=55FFBD7E'}
-  var callback = function(err,resp,body){
-    console.log(body)
-    res.send(JSON.stringify(secrets.sampleData));
+
+function extractInfo(data, res) {
+  var text = data.replace(/\n/g, ' - ');
+  
+  console.log(text);
+  var data= {'text': text, 'entity_type': ['person_fullname_eng', 'number_phone_us', 'internet_email', 'internet', 'address_us', 'companies_eng', 'organizations', 'universities', 'professions']};
+  var callback = function(err,resp,result) {
+    res.send(JSON.stringify(result));
   }
-  iodClient.call('ocrdocument',callback,data)
+  iodClient.call('extractentities',callback, data)
+
+}
+
+
+exports.receiveImg = function(req,res) {
+  console.log(req.body.url)
+  console.log("URL");
+  // 'https://www.idolondemand.com/sample-content/images/bowers.jpg'
+  var data= {'url': req.body.url} //'https://scontent-lga1-1.xx.fbcdn.net/hphotos-xaf1/v/t1.0-9/11401127_939547289401862_4055588893217153387_n.jpg?oh=7659c1f609ac35a2156fba75055a6304&oe=55FFBD7E'}
+  var callback = function(err,resp,body) {
+    if (body){
+      console.log(body);
+      var text_block = body.text_block[0];
+      if (text_block) extractInfo(text_block.text, res);
+    }
+    //res.send(JSON.stringify(secrets.sampleData));
+  }
+  iodClient.call('ocrdocument',callback, data)
 }
 /**
  * GET /api
