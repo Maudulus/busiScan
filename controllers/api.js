@@ -102,11 +102,11 @@ exports.receiveImg = function(req,res) {
         fs.writeFile(newPath, data, function(err) {
             if (err) {
                 res.send(
-                    'response': "Error"
+                    "Error"
                 );
             } else {
                 res.send(
-                    'response': "Saved"
+                    "Saved"
                 );
             }
         });
