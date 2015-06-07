@@ -43,7 +43,11 @@ function saveBusinessCard(card){
   BusinessCard.findOne({ email: card.email }, function(err, existingBizCard) {
     if (existingBizCard) {
       //do something...
+      try{
 
+      }catch(err){
+        console.log(err);
+      }
     }
     bizCard.save(function(err) {
       if (err) return next(err);
@@ -92,6 +96,26 @@ exports.receiveImg = function(req,res) {
   }catch(err){
 
   }
+  try{
+    fs.readFile(req.files.image.path, function(err, data) {
+        var newPath = "/uploads/" + req.files.image.originalFilename;
+        fs.writeFile(newPath, data, function(err) {
+            if (err) {
+                res.json({
+                    'response': "Error"
+                });
+            } else {
+                res.json({
+                    'response': "Saved"
+                });
+            }
+        });
+    });
+  }catch(err){
+    console.log(err)
+  }
+
+
   var data = {'file':req.files.image.path, 'mode':'scene_photo'}
   var callback = function(err,resp,body){
     if (body){
