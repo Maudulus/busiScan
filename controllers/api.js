@@ -103,10 +103,10 @@ function extractInfo(data, res) {
   var callback = function(err, resp, result) {
     // console.log(result);
     var card = processCardInfo(result)
-    if (card.length > 1){
+    if (Object.keys(card).length > 1){
       saveBusinessCard(card);    
     }
-    if (result){
+    if (result && Object.keys(card).length > 1){
       res.send(JSON.stringify(card));
     } 
 
