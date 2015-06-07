@@ -13,7 +13,8 @@ var bizSchema = new mongoose.Schema({
   details: String,
   firstTimeUploaded: Boolean,
   date: Date,
-  timesUploaded:Number
+  timesUploaded:Number,
+  fileData:String
 });
 
 

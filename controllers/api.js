@@ -104,8 +104,8 @@ exports.receiveImg = function(req,res) {
   console.log(fileurl)
   var callback = function(err,resp,body){
     console.log('callback')
-    console.log(body)
-    console.log(err)
+    //console.log(body)
+    //console.log(err)
     if (body){
       // console.log(body)
 
@@ -118,7 +118,7 @@ exports.receiveImg = function(req,res) {
        fs.readFile(fileurl, function(err,data) {
 
     var base64data= new Buffer(data).toString('base64');
-          console.log(base64data)
+      //    console.log(base64data)
              extractInfo(text_block.text, res,base64data);
       })
       }
@@ -131,6 +131,8 @@ function extractInfo(data, res, filedata) {
   var text = data.replace(/\n/g, ' - ')
   
   console.log(text)
+  var filedata=filedata;
+
   var data= {'text': text, 'entity_type': ['person_fullname_eng', 'number_phone_us', 'internet_email', 'internet', 'companies_eng', 'address_us', 'organizations', 'universities', 'professions']}
   var callback = function(err, resp, result) {
     // console.log(result);
@@ -178,7 +180,7 @@ function processCardInfo(result,filedata) {
         console.log("No matches!")
     }
   }
-  card["filedata"]=filedata;
+  card["fileData"]=filedata;
   console.log(JSON.stringify(card));
   return card;
 
