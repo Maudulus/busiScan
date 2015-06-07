@@ -20,20 +20,58 @@ var ig = require('instagram-node').instagram();
 var Y = require('yui/yql');
 var _ = require('lodash');
 
+var BusinessCard = require('../models/BusinessCard');
+
+// exports.postSignup = function(req, res, next) {
+//   req.assert('email', 'Email is not valid').isEmail();
+//   req.assert('password', 'Password must be at least 4 characters long').len(4);
+//   req.assert('confirmPassword', 'Passwords do not match').equals(req.body.password);
+
+//   var errors = req.validationErrors();
+
+//   if (errors) {
+//     req.flash('errors', errors);
+//     return res.redirect('/signup');
+//   }
+
+//   var user = new User({
+//     email: req.body.email,
+//     password: req.body.password
+//   });
+
+//   User.findOne({ email: req.body.email }, function(err, existingUser) {
+//     if (existingUser) {
+//       req.flash('errors', { msg: 'Account with that email address already exists.' });
+//       return res.redirect('/signup');
+//     }
+//     user.save(function(err) {
+//       if (err) return next(err);
+//       req.logIn(user, function(err) {
+//         if (err) return next(err);
+//         res.redirect('/');
+//       });
+//     });
+//   });
+// };
+
+function saveBusinessCard(){
+  var bizCard = new BusinessCard({
+    email: req.body.email,
+    password: req.body.password
+  });  
+  BusinessCard.findOne({ email: req.body.email }, function(err, existingBizCard) {
+    if (existingBizCard) {
+
+    }
+    bizCard.save(function(err) {
+      if (err) return next(err);
+
+    });
+  });  
+}
+
 var iod = require('iod-node')
 var iodClient= new iod.IODClient('http://api.idolondemand.com','dab574b3-1612-42df-942a-9f44b2bd5a61')
-
-function extractInfo(data, res) {
-  var text = data.replace(/\n/g, ' - ')
-  
-  console.log(text)
-  var data= {'text': text, 'entity_type': ['person_fullname_eng', 'number_phone_us', 'internet_email', 'internet', 'address_us', 'companies_eng', 'organizations', 'universities', 'professions']}
-  var callback = function(err,resp,result) {
-    res.send(JSON.stringify(result))
-  }
-  iodClient.call('extractentities',callback, data)
-
-}
 
 exports.receiveImg = function(req,res) {
   // console.log(req.body.url)
@@ -41,18 +79,70 @@ exports.receiveImg = function(req,res) {
   // 'https://www.idolondemand.com/sample-content/images/bowers.jpg'
   console.log("req name is " + req.name)
   console.log("req path is " + req.path)
-  var data= {'url':'https://scontent-lga1-1.xx.fbcdn.net/hphotos-xaf1/v/t1.0-9/11401127_939547289401862_4055588893217153387_n.jpg?oh=7659c1f609ac35a2156fba75055a6304&oe=55FFBD7E'}
+  var data= {'url': req.body.url} //'https://scontent-lga1-1.xx.fbcdn.net/hphotos-xaf1/v/t1.0-9/11401127_939547289401862_4055588893217153387_n.jpg?oh=7659c1f609ac35a2156fba75055a6304&oe=55FFBD7E'}
   var callback = function(err,resp,body){
     if (body){
       console.log(body);
-      var text_block = body.text_block[0];
-      if (text_block) extractInfo(text_block.text, res);
+      var text_block = body.text_block[0]
+      if (text_block) extractInfo(text_block.text, res)
     }
     // console.log(body)
     //res.send(JSON.stringify(secrets.sampleData));
   }
-  iodClient.call('ocrdocument', callback, data);
+  iodClient.call('ocrdocument', callback, data)
 }
+
+function extractInfo(data, res) {
+  var text = data.replace(/\n/g, ' - ')
+  
+  console.log(text)
+  var data= {'text': text, 'entity_type': ['person_fullname_eng', 'number_phone_us', 'internet_email', 'internet', 'companies_eng', 'address_us', 'organizations', 'universities', 'professions']}
+  var callback = function(err,resp,result) {
+    console.log(result);
+    var card = processCardInfo(result)
+    if (result) res.send(JSON.stringify(card))
+    else res.send(JSON.stringify(err))
+  }
+  iodClient.call('extractentities',callback, data)
+}
+
+function processCardInfo(result) {
+  var card = new BusinessCard();
+  var data = result.entities;
+  for (index in data)
+  {
+    var info = data[index].normalized_text
+    console.log(info);
+    switch(data[index].type) {
+      case 'person_fullname_eng':
+        console.log("PERSON FULLNAME");
+        card.fullname = info
+        break
+      case 'number_phone_us':
+        card.phone = info
+        break
+      case 'internet_email':
+        card.email = info
+        var company = info.split("@")[1];
+        company = company.split(".")[0];
+        card.company = company;
+        break
+      case 'internet':
+        card.url = info
+        break
+      case 'address_us':
+        card.address = info
+        break
+      default: 
+        console.log("No matches!")
+    }
+  }
+  console.log(JSON.stringify(card));
+  return card;
+
+}
+
+
 /**
  * GET /api
  * List of API examples.
