@@ -62,6 +62,7 @@ var iodClient= new iod.IODClient('http://api.idolondemand.com','dab574b3-1612-42
 exports.receiveImg = function(req,res) {
   // console.log(req)
   try{
+    console.log(secrets.AWS_ACCESS_KEY)
     var params = {
       localFile: req.files.image.path,
 
