@@ -25,13 +25,10 @@ var BusinessCard = require('../models/BusinessCard');
 function saveBusinessCard(card){
   console.log(card)
   var bizCard = new BusinessCard(card);
-  // var bizCard = new BusinessCard({
-  //   email: req.body.email,
-  //   password: req.body.password
-  // });  
-  BusinessCard.findOne({ email: card.email }, function(err, existingBizCard) {
+  BusinessCard.findOne($or[{ email: card.email },{ email: card.phone }], function(err, existingBizCard) {
     if (existingBizCard) {
       //do something...
+      console.log('found existing stuff')
     }
     bizCard.save(function(err) {
       if (err) return next(err);
@@ -43,7 +40,6 @@ function saveBusinessCard(card){
 var fs = require('fs');
 // var AWS = require('aws-sdk');
 // var s3 = new AWS.S3(); 
-
 
 var iod = require('iod-node')
 var iodClient= new iod.IODClient('http://api.idolondemand.com','dab574b3-1612-42df-942a-9f44b2bd5a61')

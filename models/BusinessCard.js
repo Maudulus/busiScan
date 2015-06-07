@@ -12,7 +12,8 @@ var bizSchema = new mongoose.Schema({
   address: String,
   details: String,
   firstTimeUploaded: Boolean,
-  date: Date
+  date: Date,
+  timesUploaded:Number
 });
 
 
