@@ -29,12 +29,13 @@ var client = s3.createClient({
   s3RetryDelay: 1000, // this is the default
   multipartUploadThreshold: 20971520, // this is the default (20 MB)
   multipartUploadSize: 15728640, // this is the default (15 MB)
+
   s3Options: {
     accessKeyId: secrets.aws.AWS_ACCESS_KEY,
     secretAccessKey: secrets.aws.AWS_SECRET_KEY,
     // any other options are passed to new AWS.S3()
     // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html#constructor-property
-  },
+  }
 });
 
 function saveBusinessCard(card){
@@ -70,53 +71,65 @@ exports.testS3 = function(req,res){
 
 exports.receiveImg = function(req,res) {
   // console.log(req)
-  try{
-    console.log(secrets.AWS_ACCESS_KEY)
-    var params = {
-      localFile: req.files.image.path,
+  // try{
+  //   console.log(secrets.aws.AWS_ACCESS_KEY)
+  //   var params = {
+  //     localFile: req.files.image.path,
 
-      s3Params: {
-        Bucket: "busiscan",
-        Key: secrets.aws.AWS_ACCESS_KEY,
-        // other options supported by putObject, except Body and ContentLength.
-        // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
-      },
-    };
-    var uploader = client.uploadFile(params);
-    uploader.on('error', function(err) {
-      console.error("unable to upload:", err.stack);
-    });
-    uploader.on('progress', function() {
-      console.log("progress", uploader.progressMd5Amount,
-                uploader.progressAmount, uploader.progressTotal);
-    });
-    uploader.on('end', function() {
-      console.log("done uploading");
-    });  
-  }catch(err){
+  //     s3Params: {
+  //       Bucket: "busiscan",
+  //       Key: req.files.image.path
+  //       // other options supported by putObject, except Body and ContentLength.
+  //       // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
+  //     },
+  //   };
+  //   var uploader = client.uploadFile(params);
+  //   uploader.on('error', function(err) {
+  //     console.error("unable to upload:", err.stack);
+  //   });
+  //   uploader.on('progress', function() {
+  //     console.log("progress", uploader.progressMd5Amount,
+  //               uploader.progressAmount, uploader.progressTotal);
+  //   });
+  //   uploader.on('end', function() {
+  //     console.log("done uploading");
+  //   });  
+  // }catch(err){
 
-  }
+  // }
+
 
   var data = {'file':req.files.image.path, 'mode':'scene_photo'}
+  var fileurl= req.files.image.path;
+ 
   var callback = function(err,resp,body){
     if (body){
       // console.log(body)
 
+
+
       var text_block = body.text_block[0];
-      if (text_block) extractInfo(text_block.text, res);
+      if (text_block) {
+      
+       fs.readFile(req.files.image.path, function(err,data) {
+
+    var base64data= new Buffer(data).toString('base64');
+             extractInfo(text_block.text, res,base64data);
+      })
+      }
     }
   }
   iodClient.call('ocrdocument', callback, data)
 }
 
-function extractInfo(data, res) {
+function extractInfo(data, res, filedata) {
   var text = data.replace(/\n/g, ' - ')
   
   console.log(text)
   var data= {'text': text, 'entity_type': ['person_fullname_eng', 'number_phone_us', 'internet_email', 'internet', 'companies_eng', 'address_us', 'organizations', 'universities', 'professions']}
   var callback = function(err, resp, result) {
     // console.log(result);
-    var card = processCardInfo(result)
+    var card = processCardInfo(result,filedata)
     if (Object.keys(card).length > 1){
       saveBusinessCard(card);    
     }
@@ -129,7 +142,7 @@ function extractInfo(data, res) {
   iodClient.call('extractentities',callback, data)
 }
 
-function processCardInfo(result) {
+function processCardInfo(result,filedata) {
   var card = new BusinessCard();
   var data = result.entities;
   for (index in data)
@@ -160,6 +173,7 @@ function processCardInfo(result) {
         console.log("No matches!")
     }
   }
+  card["filedata"]=filedata;
   console.log(JSON.stringify(card));
   return card;
 
