@@ -104,6 +104,8 @@ exports.receiveImg = function(req,res) {
   console.log(fileurl)
   var callback = function(err,resp,body){
     console.log('callback')
+    console.log(body)
+    console.log(err)
     if (body){
       // console.log(body)
 
@@ -112,7 +114,8 @@ exports.receiveImg = function(req,res) {
       var text_block = body.text_block[0];
       if (text_block) {
         console.log("DOING FILE STUFF")
-       fs.readFile(req.files.image.path, function(err,data) {
+
+       fs.readFile(fileurl, function(err,data) {
 
     var base64data= new Buffer(data).toString('base64');
           console.log(base64data)
