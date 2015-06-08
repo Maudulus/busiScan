@@ -65,8 +65,12 @@ var iod = require('iod-node')
 var iodClient= new iod.IODClient('http://api.idolondemand.com','dab574b3-1612-42df-942a-9f44b2bd5a61')
 
 exports.testS3 = function(req,res){
-  console.log(secrets.aws);
-  console.log(secrets.MONGOLAB_URI)
+  // console.log(secrets.aws);
+  // console.log(secrets.MONGOLAB_URI)
+  var businessCards = BusinessCard.find({}, function(err, existingBizCards) {
+  // var businessCards = db.businessCards.find();
+  res.send(existingBizCards);  
+  });
 }
 
 exports.receiveImg = function(req,res) {

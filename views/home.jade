@@ -1,8 +1,8 @@
 extends layout
 
 block content
-  h1 My Business Card
-  .js-masonry(data-masonry-options='{ "columnWidth": ".grid-sizer", "itemSelector": ".item", "percentPosition": true },"stamp": ".stamp"')
+  //h1 My Scans
+  .appendBizCards.js-masonry(data-masonry-options='{ "columnWidth": ".grid-sizer", "itemSelector": ".item", "percentPosition": true },"stamp": ".stamp"')
     #map-canvas.stamp 
     .grid-sizer     
     .item(click='showProdDetails($index)') 

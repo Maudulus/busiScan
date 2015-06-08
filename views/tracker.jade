@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  h3 My Business Card Tracker
+  .full-width
+    #mycard
+      img(src='/images/bizCard1.jpg')
+    .cardform
+      label Name
+      input(type='text' value='Lisa Vingerhoet')
+      br
+      label Company
+      input(type='text' value='IBM')
+      br
+      label Title
+      input(type='text' value='Business Development Rep')
+      br
+      label Address
+      input(type='text' value='550 King Street, Littleton, MA 01460')
+      br
+      label Phone
+      input(type='text' value='720-395-7842')    
+      br
+      label Email
+      input(type='text' value='lisav@us.ibm.com')              
+  p(style='clear:both')
+  h3(style='display: block') Location users scanned your card
+  .js-masonry(data-masonry-options='{ "columnWidth": ".grid-sizer", "itemSelector": ".item", "percentPosition": true },"stamp": ".stamp"')
+    .map-canvas2#map-canvas.stamp
+      .grid-sizer
